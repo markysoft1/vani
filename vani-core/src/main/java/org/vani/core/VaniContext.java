@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -129,6 +130,7 @@ public class VaniContext {
 		WebDriver driver = new FirefoxDriver();
 
 		configurableBeanFactory.registerSingleton("firefoxDriver", driver);
+
 		return driver;
 	}
 
@@ -265,6 +267,18 @@ public class VaniContext {
 	@SuppressWarnings("unchecked")
 	public <T> TypeHandler<T, ?> getTypeHandlerFor(Class<T> targetType) {
 		return typeHandlerRegistry.get(targetType);
+	}
+
+	@PreDestroy
+	public void shutdownWebDrivers() {
+		Map<String, WebDriver> webDrivers = appContext.getBeansOfType(WebDriver.class);
+		for (WebDriver webDriver : webDrivers.values()) {
+			try {
+				webDriver.quit();
+			} catch (Exception ex) {
+				logger.warn("cannot close webDriver '" + webDriver + "': " + webDriver);
+			}
+		}
 	}
 
 	@Autowired
