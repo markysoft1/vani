@@ -15,6 +15,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.reflections.Reflections;
 import org.springframework.beans.BeanInstantiationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -47,6 +48,9 @@ public class VaniContext {
 	private JavaScriptProxyFactory jsProxyFactory;
 	@SuppressWarnings("rawtypes")
 	private Map<Class<?>, TypeHandler> typeHandlerRegistry = new HashMap<>(6);
+
+	@Value("${vani.firefoxDriver.xpi:}")
+	private String firefoxDriverXpi;
 
 	public Reflections getReflections() {
 		return reflections;
@@ -119,6 +123,9 @@ public class VaniContext {
 	 * @return returns default web driver instance ({@link FirefoxDriver})
 	 */
 	public WebDriver createDefaultDriver() {
+		if (!StringUtils.isEmpty(firefoxDriverXpi)) {
+			System.setProperty(FirefoxDriver.SystemProperty.DRIVER_XPI_PROPERTY, firefoxDriverXpi);
+		}
 		WebDriver driver = new FirefoxDriver();
 
 		configurableBeanFactory.registerSingleton("firefoxDriver", driver);
