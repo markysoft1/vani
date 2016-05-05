@@ -21,11 +21,11 @@ import org.vani.core.locating.JQueryElement;
 @JsTypeHandler
 public class JQueryTypeHandler implements TypeHandler<JQueryElement, String> {
 	@Autowired
-	private JQuery jquery;
+	private JQuery jQuery;
 
 	@Override
 	public JQueryElement get(String reference, WebDriver webDriver) {
-		JQueryElement result = new JQueryElement(jquery, webDriver, reference);
+		JQueryElement result = new JQueryElement(jQuery, webDriver, reference);
 		return result;
 	}
 
@@ -34,7 +34,7 @@ public class JQueryTypeHandler implements TypeHandler<JQueryElement, String> {
 		return JQueryElement.class;
 	}
 
-	public void setJquery(JQuery jquery) {
-		this.jquery = jquery;
+	public void setjQuery(JQuery jQuery) {
+		this.jQuery = jQuery;
 	}
 }

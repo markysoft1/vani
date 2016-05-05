@@ -37,7 +37,7 @@ public class JQueryTypeHandlerTest {
 	@Before
 	public void setUp() {
 		bean = new JQueryTypeHandler();
-		bean.setJquery(jquery);
+		bean.setjQuery(jquery);
 	}
 
 	/**
