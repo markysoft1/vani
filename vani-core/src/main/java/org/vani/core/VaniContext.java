@@ -130,7 +130,6 @@ public class VaniContext {
 		WebDriver driver = new FirefoxDriver();
 
 		configurableBeanFactory.registerSingleton("firefoxDriver", driver);
-
 		return driver;
 	}
 
