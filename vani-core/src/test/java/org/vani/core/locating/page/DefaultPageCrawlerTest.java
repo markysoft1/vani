@@ -2,7 +2,6 @@ package org.vani.core.locating.page;
 
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,21 +13,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.function.Consumer;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 import org.openqa.selenium.WebDriver;
 import org.reflections.Reflections;
 import org.springframework.context.ApplicationContext;
 import org.vani.core.VaniContext;
 import org.vani.core.javascript.JQuery;
+import org.vani.core.javascript.LinkUtils;
 import org.vani.core.locating.JQueryElement;
 import org.vani.core.wait.WaitUtil;
 
@@ -42,6 +39,8 @@ public class DefaultPageCrawlerTest {
 	protected PageHandlerFactory pageHandlerFactory;
 	@Mock
 	protected WaitUtil waitUtil;
+	@Mock
+	protected LinkUtils linkUtils;
 
 	@Mock
 	private WebDriver webDriver;
@@ -98,44 +97,19 @@ public class DefaultPageCrawlerTest {
 	 * elements.
 	 * </p>
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void testGetApplicableUrlsWithUrlPatterns() {
 		System.out.println("testGetApplicableUrlsWithoutUrlPatterns");
 
 		String[] patterns = { "/c/", "/c/.*/document/" };
 		bean.urlPatterns = new TreeSet<>(Arrays.asList(patterns));
-		when(jquery.find(null, "a:regex(prop:href,/c/)", webDriver)).thenReturn($element);
-		when(jquery.find(null, "a:regex(prop:href,/c/.*/document/)", webDriver)).thenReturn($element2);
-		doAnswer(new Answer() {
-			@Override
-			public Object answer(InvocationOnMock invocation) {
-				Object[] args = invocation.getArguments();
-				((Consumer<Object>) args[0]).accept($element);
-				return null;
-			}
-		}).when($element).each(anyObject());
-		doAnswer(new Answer() {
-			@Override
-			public Object answer(InvocationOnMock invocation) {
-				Object[] args = invocation.getArguments();
-				((Consumer<Object>) args[0]).accept($element2);
-				return null;
-			}
-		}).when($element2).each(anyObject());
 		String expectedHref = "www.something.com/c/524.html";
 		String expectedHref2 = "www.something.com/c/524/document/4445.pdf";
-		when($element.prop("href")).thenReturn(expectedHref);
-		when($element2.prop("href")).thenReturn(expectedHref2);
+		when(linkUtils.getApplicableUrls(anyObject())).thenReturn(Arrays.asList(expectedHref, expectedHref2));
 
 		List<String> result = bean.getApplicableUrls();
 
-		verify(vaniContext, times(2)).getAppContext();
-		verify(appContext, times(2)).getBean(JQuery.class);
-		verify(jquery, times(1)).find(null, "a:regex(prop:href,/c/)", webDriver);
-		verify(jquery, times(1)).find(null, "a:regex(prop:href,/c/.*/document/)", webDriver);
-		verify($element, times(1)).prop("href");
-		verify($element2, times(1)).prop("href");
+		verify(linkUtils, times(1)).getApplicableUrls(patterns);
 		Assert.assertEquals("wrong result: ", Arrays.asList(expectedHref, expectedHref2), result);
 	}
 
@@ -468,6 +442,7 @@ public class DefaultPageCrawlerTest {
 		bean.waitUtil = waitUtil;
 		bean.pageHandlerFactory = pageHandlerFactory;
 		bean.pageHandlers = new ArrayList<>();
+		bean.linkUtils = linkUtils;
 	}
 
 	@org.vani.core.annotation.PageHandler
