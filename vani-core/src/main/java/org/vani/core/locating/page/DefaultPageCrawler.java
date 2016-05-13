@@ -14,8 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.vani.core.VaniContext;
 import org.vani.core.annotation.UrlMapping;
-import org.vani.core.locating.JQueryElement;
-import org.vani.core.locating.locator.ByJQuery;
+import org.vani.core.javascript.LinkUtils;
 import org.vani.core.wait.WaitUtil;
 
 /**
@@ -36,6 +35,8 @@ public class DefaultPageCrawler implements PageCrawler {
 	protected PageHandlerFactory pageHandlerFactory;
 	@Autowired
 	protected WaitUtil waitUtil;
+	@Autowired
+	protected LinkUtils linkUtils;
 	@Value("${vani.pageCrawler.pageLoadWaitSeconds}")
 	protected int pageLoadWaitSeconds;
 	@Value("${vani.pageCrawler.pageLoadAjaxSeconds}")
@@ -174,14 +175,7 @@ public class DefaultPageCrawler implements PageCrawler {
 	 */
 	protected List<String> getApplicableUrls() {
 		logger.debug("look for applicable urls ...");
-		List<String> result = new ArrayList<>();
-		for (String pattern : urlPatterns) {
-			logger.debug("try to find urls with pattern '" + pattern + "'...");
-			JQueryElement element = new ByJQuery("a:regex(prop:href," + pattern + ")", vaniContext).find(webDriver);
-
-			logger.debug("add matched urls for pattern '" + pattern + "' to queue");
-			element.each(a -> result.add(a.prop("href")));
-		}
+		List<String> result = linkUtils.getApplicableUrls(urlPatterns.toArray(new String[] {}));
 		logger.debug("looking for applicable urls done");
 		return result;
 	}
