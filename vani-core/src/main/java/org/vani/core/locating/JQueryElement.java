@@ -34,6 +34,26 @@ public class JQueryElement implements WebElement, GlobalReferenceHolder {
 		this.length = jquery.objectAttribute(this, "length", webDriver);
 	}
 
+	public JQueryElement(JQuery jquery, WebDriver webDriver, WebElement webElement) {
+		this.jquery = jquery;
+		this.webDriver = webDriver;
+
+		this.reference = jquery.find(null, webElement).reference;
+
+		this.selector = jquery.objectAttribute(this, "selector", webDriver);
+		this.length = jquery.objectAttribute(this, "length", webDriver);
+	}
+
+	public JQueryElement(JQuery jquery, WebDriver webDriver, List<WebElement> webElements) {
+		this.jquery = jquery;
+		this.webDriver = webDriver;
+
+		this.reference = jquery.find(null, webElements).reference;
+
+		this.selector = jquery.objectAttribute(this, "selector", webDriver);
+		this.length = jquery.objectAttribute(this, "length", webDriver);
+	}
+
 	/**
 	 * Capture the screenshot of <b>FIRST</b> wrapped element and store it in
 	 * the specified location.
@@ -71,7 +91,8 @@ public class JQueryElement implements WebElement, GlobalReferenceHolder {
 
 	@Override
 	public void click() {
-		jquery.click(this, webDriver);
+		get(0).click(); // necessary to avoid problem with clicking normal a
+						// tags
 	}
 
 	@Override
@@ -93,7 +114,14 @@ public class JQueryElement implements WebElement, GlobalReferenceHolder {
 	 */
 	@Override
 	public void sendKeys(CharSequence... keysToSend) {
-		val(keysToSend.toString());
+		StringBuilder builder = new StringBuilder();
+
+		if (keysToSend != null) {
+			for (CharSequence keys : keysToSend) {
+				builder.append(keys);
+			}
+		}
+		val(builder.toString());
 	}
 
 	@Override
@@ -134,13 +162,16 @@ public class JQueryElement implements WebElement, GlobalReferenceHolder {
 	public List<WebElement> findElements(By by) {
 		List<WebElement> wrappedElements = get();
 		List<WebElement> result = new ArrayList<>(30);
-		wrappedElements.forEach(e -> result.addAll(e.findElements(by)));
+		wrappedElements.forEach(e -> result.add(new JQueryElement(jquery, webDriver, e.findElements(by))));
 		return result;
 	}
 
 	@Override
 	public WebElement findElement(By by) {
-		return findElements(by).iterator().next();
+		List<WebElement> wrappedElements = get();
+		List<WebElement> result = new ArrayList<>(30);
+		wrappedElements.forEach(e -> result.addAll(e.findElements(by)));
+		return new JQueryElement(jquery, webDriver, result);
 	}
 
 	@Override

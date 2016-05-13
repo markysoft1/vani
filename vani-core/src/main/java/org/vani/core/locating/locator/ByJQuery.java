@@ -31,8 +31,14 @@ public class ByJQuery extends By {
 	@Override
 	public WebElement findElement(SearchContext context) {
 		if (context instanceof WebElement) {
-			return jquery.find(null, (WebElement) context, ((RemoteWebElement) context).getWrappedDriver())
-					.find(selector);
+			WebDriver driver = null;
+			if (context instanceof JQueryElement) {
+				driver = ((JQueryElement) context).getWebDriver();
+				return ((JQueryElement) context).find(selector);
+			} else {
+				driver = ((RemoteWebElement) context).getWrappedDriver();
+				return jquery.find(null, (WebElement) context, driver).find(selector);
+			}
 		} else if (context instanceof WebDriver) {
 			return find((WebDriver) context);
 		} else {

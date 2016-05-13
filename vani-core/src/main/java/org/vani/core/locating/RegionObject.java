@@ -26,7 +26,7 @@ public abstract class RegionObject {
 	protected JQueryLocatorBuilder $;
 	@Autowired
 	protected WaitUtil waitUtil;
-	protected boolean invalidated;
+	private boolean invalidated;
 
 	@PostConstruct
 	protected void initJQuery() {

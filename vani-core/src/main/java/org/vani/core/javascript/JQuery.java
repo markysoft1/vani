@@ -32,6 +32,9 @@ public interface JQuery extends JQueryRegexSelectorPlugin, JQueryObjectInterface
 	public JQueryElement find(GlobalReferenceHolder ref, WebElement element);
 
 	@JavaScriptFunction
+	public JQueryElement find(GlobalReferenceHolder ref, List<WebElement> element);
+
+	@JavaScriptFunction
 	public JQueryElement find(GlobalReferenceHolder ref, String selector, WebDriver webDriver);
 
 	@JavaScriptFunction

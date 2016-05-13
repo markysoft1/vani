@@ -5,6 +5,8 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vani.core.VaniContext;
+import org.vani.core.locating.JQueryElement;
+import org.vani.core.locating.JQueryElementLocator;
 import org.vani.core.locating.RegionElementLocator;
 import org.vani.core.locating.RegionObject;
 import org.vani.core.locating.VaniElementLocator;
@@ -38,7 +40,9 @@ public class DefaultElementLocatorFactory implements ElementLocatorFactory {
 		Class<?> type = fieldTypeInfo.getTargetType();
 
 		VaniElementLocator<?> result = null;
-		if (WebElement.class.isAssignableFrom(type)) {
+		if (JQueryElement.class.isAssignableFrom(type)) {
+			result = new JQueryElementLocator(searchContext, by, shouldCache, fieldTypeInfo, vaniContext);
+		} else if (WebElement.class.isAssignableFrom(type)) {
 			result = new WebElementLocator(searchContext, by, shouldCache, fieldTypeInfo, vaniContext);
 		} else if (RegionObject.class.isAssignableFrom(type)) {
 			result = new RegionElementLocator(searchContext, by, true, fieldTypeInfo, regionFactory, vaniContext);
