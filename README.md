@@ -6,7 +6,7 @@
 **The framework is still under development**
 
 ## Features
-- auto instantiating and injecting of *WebElement* and *PageObject* of annotated fields ([Details](https://github.com/markysoft1/vani/wiki/Element-Locating)
+- auto instantiating and injecting of *WebElement* and *PageObject* of annotated fields ([Details](https://github.com/markysoft1/vani/wiki/Element-Locating))
 	- supports all *FindBy*-annotations ([Details](https://github.com/markysoft1/vani/wiki/Element-Locating#selenium-selectors))
 	- you can also use the power of *[JQuery](https://jquery.com/)*'s selectors by annotating with *@FindByJQuery* ([Details](https://github.com/markysoft1/vani/wiki/Element-Locating#jquery-selectors))
 	- injected instances are proxied (except page and fragment objects). So locating of annotated elements will be executing during a call on it.
