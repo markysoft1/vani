@@ -6,16 +6,16 @@
 **The framework is still under development**
 
 ## Features
-- auto instantiating and injecting of *WebElement* and *PageObject* of annotated fields
-	- supports all *FindBy*-annotations
-	- you can also use the power of *[JQuery](https://jquery.com/)*'s selectors by annotating with *@FindByJQuery*
+- auto instantiating and injecting of *WebElement* and *PageObject* of annotated fields ([Details](https://github.com/markysoft1/vani/wiki/Element-Locating)
+	- supports all *FindBy*-annotations ([Details](https://github.com/markysoft1/vani/wiki/Element-Locating#selenium-selectors))
+	- you can also use the power of *[JQuery](https://jquery.com/)*'s selectors by annotating with *@FindByJQuery* ([Details](https://github.com/markysoft1/vani/wiki/Element-Locating#jquery-selectors))
 	- injected instances are proxied (except page and fragment objects). So locating of annotated elements will be executing during a call on it.
-- introduce *FragmentObject*, so you can declare reusable parts or reduce complexity of *PageObject*s by extracting code in fragments
+- introduce *FragmentObject*, so you can declare reusable parts or reduce complexity of *PageObject*s by extracting code in fragments ([Details](https://github.com/markysoft1/vani/wiki/Page-Object))
 - all annotations supports spring placeholders (also all Selenium's *@FindBy*)
-- declaring a startpage which is automatically opened before your test method is called
+- declaring a startpage which is automatically opened before your test method is called ([Details](https://github.com/markysoft1/vani/wiki/Page-Object#startpage))
 - explicit waits for completing jQuery's ajax requests by *@Xhr*
-- conditional selection of fragment implementations by *@ContentCondition*
-- provides a page crawling mechanism which opens specific links on testing pages
+- conditional selection of fragment implementations by *@ContentCondition* ([Details](https://github.com/markysoft1/vani/wiki/Page-Object#conditional-fragments))
+- provides a page crawling mechanism which opens specific links on testing pages ([Details](https://github.com/markysoft1/vani/wiki/Page-Crawling-Mechanism))
 - convenience interface for injecting and executing javascript source code into testing pages
 
 ## Requirements
