@@ -21,7 +21,7 @@ import org.vani.core.javascript.VaniUtils;
  * <h3>Declaration of java source code</h3> You create a js-file for the
  * javascript code and tell vani the path to that file. This is done by
  * {@link JavaScript#source()} or {@link JavaScript#sources()} when you have
- * multiple files. The path could by delcared as filesystem lookup or classpath.
+ * multiple files. The path could be declared as filesystem lookup or classpath.
  * The classpath lookup also supports wildcards. For example the declaration of
  * {@link JQuery}, vani will look for a classpath resource with the name
  * {@code jquery-2.2.1.js}:
@@ -84,7 +84,7 @@ import org.vani.core.javascript.VaniUtils;
  * </code>
  * </pre>
  * <p>
- * <h3>Plugins</h3> You can extends the underlying javascript-source, if you
+ * <h3>Plugins</h3> You can extend the underlying javascript-source, if you
  * declare the interface by extending an plugin-interface. For example, the
  * jquery-interface is extending {@link JQueryRegexSelectorPlugin} to provide a
  * regex-selector:
