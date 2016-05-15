@@ -37,9 +37,9 @@ public class DefaultPageCrawler implements PageCrawler {
 	protected WaitUtil waitUtil;
 	@Autowired
 	protected LinkUtils linkUtils;
-	@Value("${vani.pageCrawler.pageLoadWaitSeconds}")
+	@Value("${vani.pageCrawler.pageLoadWaitSeconds:1}")
 	protected int pageLoadWaitSeconds;
-	@Value("${vani.pageCrawler.pageLoadAjaxSeconds}")
+	@Value("${vani.pageCrawler.pageLoadAjaxSeconds:1}")
 	protected int pageLoadAjaxSeconds;
 	protected List<PageHandler> pageHandlers = new ArrayList<>();
 
