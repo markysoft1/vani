@@ -13,7 +13,7 @@
 - introduce *FragmentObject*, so you can declare reusable parts or reduce complexity of *PageObject*s by extracting code in fragments ([Details](https://github.com/markysoft1/vani/wiki/Page-Object))
 - all annotations supports spring placeholders (also all Selenium's *@FindBy*)
 - declaring a startpage which is automatically opened before your test method is called ([Details](https://github.com/markysoft1/vani/wiki/Page-Object#startpage))
-- explicit waits for completing jQuery's ajax requests by *@Xhr* ([Details](https://github.com/markysoft1/vani/wiki/Waiting#xhr))
+- explicit waits for making a jQuery ajax requests by *@Xhr* ([Details](https://github.com/markysoft1/vani/wiki/Waiting#xhr))
 - conditional selection of fragment implementations by *@ContentCondition* ([Details](https://github.com/markysoft1/vani/wiki/Page-Object#conditional-fragments))
 - provides a page crawling mechanism which opens specific links on testing pages ([Details](https://github.com/markysoft1/vani/wiki/Page-Crawling-Mechanism))
 - convenience interface for injecting and executing javascript source code into testing pages ([Details](https://github.com/markysoft1/vani/wiki/Javascript-Injection))
