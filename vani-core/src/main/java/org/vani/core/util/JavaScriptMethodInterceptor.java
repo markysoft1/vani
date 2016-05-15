@@ -18,12 +18,12 @@ import org.vani.core.annotation.JavaScript;
 import org.vani.core.annotation.JavaScriptFunction;
 import org.vani.core.annotation.JsFunctionArguments;
 import org.vani.core.annotation.JsFunctionName;
+import org.vani.core.annotation.ManualJavaScriptInterface;
 import org.vani.core.javascript.GlobalReferenceHolder;
 import org.vani.core.javascript.JavaScriptException;
 import org.vani.core.javascript.JavaScriptSource;
 import org.vani.core.javascript.TypeHandler;
 import org.vani.core.javascript.VaniJavaScriptExecutor;
-import org.vani.core.util.JavaScriptMethodInterceptorTest.ManualJsInterface;
 
 import net.bytebuddy.implementation.bind.annotation.AllArguments;
 import net.bytebuddy.implementation.bind.annotation.Origin;
@@ -38,7 +38,7 @@ import net.bytebuddy.implementation.bind.annotation.RuntimeType;
  *
  * @see JavaScript
  * @see JavaScriptFunction
- * @see ManualJsInterface
+ * @see ManualJavaScriptInterface
  */
 public class JavaScriptMethodInterceptor {
 	private final Log logger = LogFactory.getLog(getClass());
