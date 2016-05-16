@@ -91,7 +91,7 @@ At the next lines, we declare the required fields by jquery selectors.
 
 The method will set the specified values of located input fields and click the login link. The locating of each `JQueryElement` will be executed during access on its wrapped html element. This provide you the possibility, to get an instance of your page object although its desired html elements are still unavailable. Finally, the current instance will be marked as invalid, so all cached elements are relocated at the next access. This is useful if you use `@ContentCondition` for selecting specific fragment implemenation.
 
-# LICENSE
+## LICENSE
 MIT License
 
 Copyright (c) 2016 markysoft1
