@@ -3,8 +3,6 @@
 
 *Vani* is written in Java and can only used in conjunction with the java version of Selenium.
 
-**The framework is still under development**
-
 ## Features
 - auto instantiating and injecting of *WebElement* and *PageObject* of annotated fields ([Details](https://github.com/markysoft1/vani/wiki/Element-Locating))
 	- supports all *FindBy*-annotations ([Details](https://github.com/markysoft1/vani/wiki/Element-Locating#selenium-selectors))
