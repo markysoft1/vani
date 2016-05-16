@@ -91,3 +91,25 @@ At the next lines, we declare the required fields by jquery selectors.
 
 The method will set the specified values of located input fields and click the login link. The locating of each `JQueryElement` will be executed during access on its wrapped html element. This provide you the possibility, to get an instance of your page object although its desired html elements are still unavailable. Finally, the current instance will be marked as invalid, so all cached elements are relocated at the next access. This is useful if you use `@ContentCondition` for selecting specific fragment implemenation.
 
+# LICENSE
+MIT License
+
+Copyright (c) 2016 markysoft1
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
