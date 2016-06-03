@@ -5,7 +5,7 @@
 	<name>Vani Core</name>
 
 	<parent>
-		<groupId>org.vani</groupId>
+		<groupId>org.markysoft.vani</groupId>
 		<artifactId>vani-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version> 
 		<relativePath>../vani-parent/pom.xml</relativePath>
@@ -52,22 +52,6 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	
 
 </project>
