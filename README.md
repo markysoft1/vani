@@ -57,15 +57,15 @@ In your context-configuration xml (`test-context.xml` in the above example) you 
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<import resource="classpath:org/vani/spring/vani-context.xml" />
+	<import resource="classpath:org/markysoft/vani/spring/vani-context.xml" />
 </beans>
 ```
 This will setup the default configuration of *Vani*. So you don't have to declare all required beans manual.
 
 At the end, we declare the page object:
 ```java
-import org.vani.core.locating.PageObject;
-import org.vani.core.locating.locator.FindByJQuery;
+import org.markysoft.vani.core.locating.PageObject;
+import org.markysoft.vani.core.locating.locator.FindByJQuery;
 
 @PageUrl("${config.blogUrl}")
 public class HomePage extends PageObject{
