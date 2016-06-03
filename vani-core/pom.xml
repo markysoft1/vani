@@ -5,7 +5,7 @@
 	<name>Vani Core</name>
 
 	<parent>
-		<groupId>org.markysoft.vani</groupId>
+		<groupId>org.markysoft</groupId>
 		<artifactId>vani-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version> 
 		<relativePath>../vani-parent/pom.xml</relativePath>
