@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.markysoft.vani.core.VaniContext;
+import org.markysoft.vani.core.javascript.VaniUtils;
 import org.markysoft.vani.core.locating.locator.ByJQuery;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
@@ -160,6 +161,11 @@ public class WaitBuilder implements WaitOperatorBuilder, WaitConditionTargetBuil
 				return result;
 			}
 		});
+		return this;
+	}
+
+	public WaitOperatorBuilder variable(String variableName) {
+		commands.add(new VariableWaitCommand(variableName, vaniContext.getAppContext().getBean(VaniUtils.class)));
 		return this;
 	}
 

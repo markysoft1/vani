@@ -25,6 +25,10 @@ public class WaitUtil {
 		return new WaitBuilder(vaniContext).element(selector, rootElement);
 	}
 
+	public WaitOperatorBuilder variable(String variableName) {
+		return new WaitBuilder(vaniContext).variable(variableName);
+	}
+
 	public WaitOperatorBuilder webDriver(WebDriver value) {
 		return new WaitBuilder(vaniContext).webDriver(value);
 	}

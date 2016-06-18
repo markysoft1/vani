@@ -1,7 +1,9 @@
 package org.markysoft.vani.core.locating.page;
 
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -22,9 +24,7 @@ import org.markysoft.vani.core.VaniContext;
 import org.markysoft.vani.core.javascript.JQuery;
 import org.markysoft.vani.core.javascript.LinkUtils;
 import org.markysoft.vani.core.locating.JQueryElement;
-import org.markysoft.vani.core.locating.page.DefaultPageCrawler;
-import org.markysoft.vani.core.locating.page.PageHandler;
-import org.markysoft.vani.core.locating.page.PageHandlerFactory;
+import org.markysoft.vani.core.locating.PageMarkerHandler;
 import org.markysoft.vani.core.wait.WaitUtil;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -44,6 +44,8 @@ public class DefaultPageCrawlerTest {
 	protected WaitUtil waitUtil;
 	@Mock
 	protected LinkUtils linkUtils;
+	@Mock
+	protected PageMarkerHandler pageMarkerHandler;
 
 	@Mock
 	private WebDriver webDriver;
@@ -296,6 +298,36 @@ public class DefaultPageCrawlerTest {
 	}
 
 	/**
+	 * tests {@link DefaultPageCrawler#handle(String)} when two page handlers
+	 * are available. The first one is not applicable, but second one is it.
+	 * Additionally pageMarkerHandler is set.
+	 * <p>
+	 * As result, {@code webDriver} must open given url, pageMarkerHandler must
+	 * be called instead of waits.
+	 * </p>
+	 */
+	@Test
+	public void testHandleWithHandlersWithPageMarkerHandler() {
+		System.out.println("testHandleWithHandlersWithPageMarkerHandler");
+
+		String url = "http://www.something.com/c/500.html?sortingOrder=ASC;JSESSIONID=1A530637289A03B07199A44E8D531427";
+		bean.pageLoadAjaxSeconds = 5;
+		bean.pageLoadWaitSeconds = 3;
+		bean.pageHandlers = Arrays.asList(pageHandler, pageHandler2);
+		when(pageHandler2.isApplicable(url)).thenReturn(true);
+		bean.pageMarkerHandler = pageMarkerHandler;
+
+		bean.handle(url);
+
+		verify(webDriver, times(1)).get(url);
+		verify(pageMarkerHandler, times(1)).setVaniMarker(webDriver);
+		verify(pageMarkerHandler, times(1)).waitUntilMarkerIsPresent(webDriver);
+		verify(waitUtil, times(0)).waitTime(anyLong());
+		verify(waitUtil, times(0)).ajaxJQuery(anyLong(), eq(webDriver));
+		verify(pageHandler2, times(1)).handle(url, webDriver);
+	}
+
+	/**
 	 * tests {@link DefaultPageCrawler#handle(String)} when 3 applicable urls
 	 * are available, but one is duplicated.
 	 * <p>
@@ -446,6 +478,7 @@ public class DefaultPageCrawlerTest {
 		bean.pageHandlerFactory = pageHandlerFactory;
 		bean.pageHandlers = new ArrayList<>();
 		bean.linkUtils = linkUtils;
+
 	}
 
 	@org.markysoft.vani.core.annotation.PageHandler

@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.markysoft.vani.core.VaniContext;
 import org.markysoft.vani.core.annotation.UrlMapping;
 import org.markysoft.vani.core.javascript.LinkUtils;
+import org.markysoft.vani.core.locating.PageMarkerHandler;
 import org.markysoft.vani.core.wait.WaitUtil;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ import org.springframework.beans.factory.annotation.Value;
 
 /**
  * This implementation collects all classes annotated with
- * {@link org.markysoft.vani.core.annotation.PageHandler} and use its declarations of
- * {@link UrlMapping} as applicable url patterns.
+ * {@link org.markysoft.vani.core.annotation.PageHandler} and use its
+ * declarations of {@link UrlMapping} as applicable url patterns.
  * 
  * @author Thomas
  *
@@ -35,6 +36,8 @@ public class DefaultPageCrawler implements PageCrawler {
 	protected PageHandlerFactory pageHandlerFactory;
 	@Autowired
 	protected WaitUtil waitUtil;
+	@Autowired(required = false)
+	protected PageMarkerHandler pageMarkerHandler;
 	@Autowired
 	protected LinkUtils linkUtils;
 	@Value("${vani.pageCrawler.pageLoadWaitSeconds:1}")
@@ -45,9 +48,9 @@ public class DefaultPageCrawler implements PageCrawler {
 
 	/**
 	 * This method looks for classes annotated with
-	 * {@link org.markysoft.vani.core.annotation.PageHandler}. The found classes will be
-	 * instantiated by {@link PageHandlerFactory} and the declared url patterns
-	 * are registered.
+	 * {@link org.markysoft.vani.core.annotation.PageHandler}. The found classes
+	 * will be instantiated by {@link PageHandlerFactory} and the declared url
+	 * patterns are registered.
 	 */
 	@PostConstruct
 	public void initializeHandlers() {
@@ -101,13 +104,21 @@ public class DefaultPageCrawler implements PageCrawler {
 	 */
 	protected void handle(String url) {
 		logger.debug("try to open next url '" + url + "'");
+
+		if (pageMarkerHandler != null) {
+			pageMarkerHandler.setVaniMarker(webDriver);
+		}
 		webDriver.get(url);
 
-		logger.debug("wait explicit '" + pageLoadWaitSeconds + "' seconds after page changed");
-		waitUtil.waitTime(pageLoadWaitSeconds * 1000);
+		if (pageMarkerHandler != null) {
+			pageMarkerHandler.waitUntilMarkerIsPresent(webDriver);
+		} else {
+			logger.debug("wait explicit '" + pageLoadWaitSeconds + "' seconds after page changed");
+			waitUtil.waitTime(pageLoadWaitSeconds * 1000);
 
-		logger.debug("wait max '" + pageLoadAjaxSeconds + "' seconds for ajax requests are finished!");
-		waitUtil.ajaxJQuery(pageLoadAjaxSeconds * 1000, webDriver);
+			logger.debug("wait max '" + pageLoadAjaxSeconds + "' seconds for ajax requests are finished!");
+			waitUtil.ajaxJQuery(pageLoadAjaxSeconds * 1000, webDriver);
+		}
 
 		for (PageHandler handler : pageHandlers) {
 			if (handler.isApplicable(url)) {

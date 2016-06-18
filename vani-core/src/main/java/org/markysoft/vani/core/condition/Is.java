@@ -62,4 +62,16 @@ public class Is {
 		return result;
 	}
 
+	/**
+	 * This method will check whether provided is not {@code NULL} and empty
+	 * (for string).
+	 * 
+	 * @param element
+	 * @return returns true if provided value is not NULL and empty
+	 */
+	public static boolean present(Object value) {
+		boolean result = value != null && !value.toString().isEmpty() && !"false".equals(value.toString());
+		return result;
+	}
+
 }

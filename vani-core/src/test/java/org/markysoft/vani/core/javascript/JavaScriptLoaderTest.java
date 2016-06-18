@@ -26,9 +26,6 @@ import org.markysoft.vani.core.annotation.JavaScript;
 import org.markysoft.vani.core.annotation.JsCallFunction;
 import org.markysoft.vani.core.annotation.JsFunctionArguments;
 import org.markysoft.vani.core.annotation.JsFunctionName;
-import org.markysoft.vani.core.javascript.JavaScriptCallFunction;
-import org.markysoft.vani.core.javascript.JavaScriptLoader;
-import org.markysoft.vani.core.javascript.JavaScriptSource;
 import org.markysoft.vani.core.util.VaniReflectionUtil;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -200,7 +197,7 @@ public class JavaScriptLoaderTest {
 	@Test
 	public void testGetResourcesPathFromFilesystemWithPath() throws Throwable {
 		System.out.println("testGetResourcesPathFromFilesystemWithoutPath");
-		String path = "src/main/resources/org/vani/javascript/vani-utils.js";
+		String path = "src/main/resources/org/markysoft/vani/javascript/vani-utils.js";
 
 		List<Path> result = bean.getResourcesPathFromFilesystem(path);
 
@@ -280,7 +277,8 @@ public class JavaScriptLoaderTest {
 		System.out.println("testFromFilesystemWithUnknown");
 		String path = "vani-utils.js";
 
-		String expected = FileUtils.readFileToString(new File("src/main/resources/org/vani/javascript/vani-utils.js"));
+		String expected = FileUtils
+				.readFileToString(new File("src/main/resources/org/markysoft/vani/javascript/vani-utils.js"));
 		Set<String> matches = new HashSet<>(Arrays.asList("org/vani/javascript/vani-utils.js"));
 		when(reflections.getResources((Pattern) anyObject())).thenReturn(matches);
 
@@ -304,8 +302,9 @@ public class JavaScriptLoaderTest {
 		System.out.println("testFromClasspathWithLeadingSlash");
 		String path = "vani-utils.js";
 
-		String expected = FileUtils.readFileToString(new File("src/main/resources/org/vani/javascript/vani-utils.js"));
-		Set<String> matches = new HashSet<>(Arrays.asList("/org/vani/javascript/vani-utils.js"));
+		String expected = FileUtils
+				.readFileToString(new File("src/main/resources/org/markysoft/vani/javascript/vani-utils.js"));
+		Set<String> matches = new HashSet<>(Arrays.asList("/org/markysoft/vani/javascript/vani-utils.js"));
 		when(reflections.getResources((Pattern) anyObject())).thenReturn(matches);
 
 		StringBuilder result = bean.fromClasspath(path, vaniContext);
@@ -409,7 +408,7 @@ public class JavaScriptLoaderTest {
 		Set<String> matches = new HashSet<>(Arrays.asList("org/vani/javascript/vani-jquery-call.js"));
 		when(reflections.getResources((Pattern) anyObject())).thenReturn(matches);
 		String expectedSource = FileUtils
-				.readFileToString(new File("src/main/resources/org/vani/javascript/vani-jquery-call.js"));
+				.readFileToString(new File("src/main/resources/org/markysoft/vani/javascript/vani-jquery-call.js"));
 
 		bean.setCallFunction(jsSource, vaniContext);
 
@@ -700,8 +699,8 @@ public class JavaScriptLoaderTest {
 		System.out.println("testLoadWithSourcesFilesystemAndClasspath");
 
 		String expectedContent = FileUtils.readFileToString(new File("./pom.xml"));
-		expectedContent += "\n\n"
-				+ FileUtils.readFileToString(new File("src/main/resources/org/vani/javascript/vani-utils.js"));
+		expectedContent += "\n\n" + FileUtils
+				.readFileToString(new File("src/main/resources/org/markysoft/vani/javascript/vani-utils.js"));
 		Class<?> jsInterfaceClass = JSInterface.class;
 		when(javaScript.sources()).thenReturn(new String[] { "pom.xml", "classpath:vani-utils.js" });
 		Set<String> matches = new HashSet<>(Arrays.asList("org/vani/javascript/vani-utils.js"));
