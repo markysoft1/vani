@@ -279,7 +279,7 @@ public class JavaScriptLoaderTest {
 
 		String expected = FileUtils
 				.readFileToString(new File("src/main/resources/org/markysoft/vani/javascript/vani-utils.js"));
-		Set<String> matches = new HashSet<>(Arrays.asList("org/vani/javascript/vani-utils.js"));
+		Set<String> matches = new HashSet<>(Arrays.asList("org/markysoft/vani/javascript/vani-utils.js"));
 		when(reflections.getResources((Pattern) anyObject())).thenReturn(matches);
 
 		StringBuilder result = bean.fromClasspath(path, vaniContext);
@@ -405,7 +405,7 @@ public class JavaScriptLoaderTest {
 		JsCallFunction expectedCallAnnotation = method.getAnnotation(JsCallFunction.class);
 		when(jsSource.getJsInterface()).thenReturn(jsInterfaceClass);
 		when(reflectionUtil.getAnnotatedMethodWith(jsInterfaceClass, JsCallFunction.class, null)).thenReturn(method);
-		Set<String> matches = new HashSet<>(Arrays.asList("org/vani/javascript/vani-jquery-call.js"));
+		Set<String> matches = new HashSet<>(Arrays.asList("org/markysoft/vani/javascript/vani-jquery-call.js"));
 		when(reflections.getResources((Pattern) anyObject())).thenReturn(matches);
 		String expectedSource = FileUtils
 				.readFileToString(new File("src/main/resources/org/markysoft/vani/javascript/vani-jquery-call.js"));
@@ -703,7 +703,7 @@ public class JavaScriptLoaderTest {
 				.readFileToString(new File("src/main/resources/org/markysoft/vani/javascript/vani-utils.js"));
 		Class<?> jsInterfaceClass = JSInterface.class;
 		when(javaScript.sources()).thenReturn(new String[] { "pom.xml", "classpath:vani-utils.js" });
-		Set<String> matches = new HashSet<>(Arrays.asList("org/vani/javascript/vani-utils.js"));
+		Set<String> matches = new HashSet<>(Arrays.asList("org/markysoft/vani/javascript/vani-utils.js"));
 		when(reflections.getResources((Pattern) anyObject())).thenReturn(matches);
 
 		JavaScriptSource result = bean.load(javaScript, jsInterfaceClass, vaniContext);
