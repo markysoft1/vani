@@ -20,7 +20,7 @@
 	<parent>
 		<groupId>org.markysoft</groupId>
 		<artifactId>vani-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version> 
+		<version>0.9.1</version> 
 		<relativePath>../vani-parent/pom.xml</relativePath>
 	</parent>
 
