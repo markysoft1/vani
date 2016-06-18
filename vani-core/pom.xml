@@ -67,4 +67,5 @@
 
 	
 
+	<description>It provides a convenience way to combine the power of selenium's browser automation framework and springframework.</description>
 </project>
