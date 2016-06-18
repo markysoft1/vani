@@ -52,6 +52,8 @@ public class VaniContext {
 
 	@Value("${vani.firefoxDriver.xpi:}")
 	private String firefoxDriverXpi;
+	@Value("${vani.firefoxDriver.binary:}")
+	private String firefoxBinary;
 
 	public Reflections getReflections() {
 		return reflections;
@@ -126,6 +128,9 @@ public class VaniContext {
 	public WebDriver createDefaultDriver() {
 		if (!StringUtils.isEmpty(firefoxDriverXpi)) {
 			System.setProperty(FirefoxDriver.SystemProperty.DRIVER_XPI_PROPERTY, firefoxDriverXpi);
+		}
+		if (!StringUtils.isEmpty(firefoxBinary)) {
+			System.setProperty(FirefoxDriver.SystemProperty.BROWSER_BINARY, firefoxBinary);
 		}
 		WebDriver driver = new FirefoxDriver();
 
