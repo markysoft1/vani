@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.markysoft</groupId>
 	<artifactId>vani-parent</artifactId>
-	<version>0.9.2</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>Vani Parent</name>
 	<description>It provides a convenience way to combine the power of selenium's browser automation framework and springframework.</description>
 	<url>https://github.com/markysoft1/vani</url>
