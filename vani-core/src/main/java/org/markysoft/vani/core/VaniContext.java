@@ -158,8 +158,10 @@ public class VaniContext {
 	 */
 	@PostConstruct
 	protected void registerJavaScripts() {
+		logger.debug("register js-interfaces...");
 		Map<Class<?>, JavaScriptSource<?>> jsSourceMap = new HashMap<>(10);
 		Set<Class<?>> jsClasses = reflections.getTypesAnnotatedWith(JavaScript.class);
+		logger.debug("found js-interfaces: " + jsClasses);
 		if (jsClasses != null) {
 			for (Class<?> jsClass : jsClasses) {
 				JavaScript jsAnnotation = jsClass.getDeclaredAnnotation(JavaScript.class);
@@ -191,6 +193,8 @@ public class VaniContext {
 
 				Object jsProxy = jsProxyFactory.createProxy(jsSource);
 				configurableBeanFactory.registerSingleton(StringUtils.uncapitalize(jsClass.getSimpleName()), jsProxy);
+
+				logger.debug("register js-interface: " + jsClass);
 			}
 		}
 		initJsTypeHandler();

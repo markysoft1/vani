@@ -1,5 +1,7 @@
 package org.markysoft.vani.spring;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.markysoft.vani.core.VaniContext;
 import org.markysoft.vani.core.javascript.JavaScriptLoader;
 import org.markysoft.vani.core.locating.factory.AnnotationProxyFactory;
@@ -37,6 +39,7 @@ import org.springframework.core.env.Environment;
 @Configuration
 @Profile("!vani-custom")
 public class VaniDefaultConfiguration implements ApplicationContextAware {
+	private Log logger = LogFactory.getLog(VaniDefaultConfiguration.class);
 	@Autowired
 	private Environment environment;
 	@Autowired
@@ -120,9 +123,10 @@ public class VaniDefaultConfiguration implements ApplicationContextAware {
 
 	protected Reflections reflections() {
 		if (this.reflections == null) {
+			logger.debug("init Reflections...");
 			//@formatter:off
 			reflections= new Reflections(new ConfigurationBuilder()
-					.setUrls(ClasspathHelper.forClassLoader())
+					.setUrls(ClasspathHelper.forJavaClassPath())
 					.setScanners(
 							new SubTypesScanner(), 
 							new TypeAnnotationsScanner(),
